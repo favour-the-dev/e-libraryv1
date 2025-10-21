@@ -32,20 +32,20 @@ function Navbar() {
               Home
             </Link>
             <Link
-              href="/catalogue"
+              href="/#how-it-works"
               className={`${
-                pathName === "/catalogue" && "text-deepSkyBlue"
+                pathName === "/#how-it-works" && "text-deepSkyBlue"
+              } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
+            >
+              How It Works
+            </Link>
+            <Link
+              href="/#catalogue"
+              className={`${
+                pathName === "/#catalogue" && "text-deepSkyBlue"
               } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
             >
               Catalogue
-            </Link>
-            <Link
-              href="#about"
-              className={`${
-                pathName === "/about" && "text-deepSkyBlue"
-              } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
-            >
-              About
             </Link>
             <Link
               href="#features"
@@ -53,7 +53,7 @@ function Navbar() {
                 pathName === "/features" && "text-deepSkyBlue"
               } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
             >
-              Features
+              Testimonials
             </Link>
             <Link
               href="#contact"
