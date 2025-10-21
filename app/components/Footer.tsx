@@ -1,7 +1,10 @@
 function Footer() {
+  const year = new Date().getFullYear();
   return (
-    <footer>
-      <p>© 2023 Library Management System</p>
+    <footer className="py-10 mt-5">
+      <div className="max-container flex items-center justify-center">
+        <p>© {year} BookWise.co. All rights reserved.</p>
+      </div>
     </footer>
   );
 }

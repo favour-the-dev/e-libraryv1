@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -8,6 +9,12 @@
   --color-white-solid: #f6f7f8;
   --color-corbeau: #0f172a;
   --color-buoyant: #667182;
+  --font-playfairDisplay: var(--font-playfair);
+  --font-bbh-sans: "BBH Sans Hegarty", sans-serif;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 @layer utilities {
@@ -57,14 +64,6 @@
 }
 
 :root {
-  --scrollbar-bg: #f3f4f6;
-  --scrollbar-thumb: #cbd5e1;
-  --scrollbar-thumb-hover: #94a3b8;
-  --scrollbar-thumb-active: #64748b;
-  --scrollbar-width: 12px;
-  --scrollbar-radius: 9999px;
-  --scrollbar-padding: 3px;
-  --scrollbar-contrast-min: 3;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -97,59 +96,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-}
-
-*::-webkit-scrollbar {
-  width: var(--scrollbar-width);
-  height: var(--scrollbar-width);
-}
-
-*::-webkit-scrollbar-track {
-  background: var(--scrollbar-bg);
-  border-radius: var(--scrollbar-radius);
-  /* keep a little breathing room so thumb looks floating */
-  box-shadow: inset 0 0 0 var(--scrollbar-padding) transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    var(--scrollbar-thumb),
-    var(--scrollbar-thumb-hover)
-  );
-  border-radius: var(--scrollbar-radius);
-  border: var(--scrollbar-padding) solid transparent; /* creates "gap" between thumb and track */
-  background-clip: padding-box;
-  min-height: 28px; /* prevents super tiny thumbs */
-  transition: background-color 160ms ease, box-shadow 160ms ease,
-    transform 160ms ease;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
-}
-
-/* hover */
-*::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-  box-shadow: 0 4px 10px rgba(16, 24, 40, 0.08);
-}
-*::-webkit-scrollbar-thumb:active {
-  background: var(--scrollbar-thumb-active);
-  transform: translateY(0.5px);
-}
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
-}
-.modern-scrollbar {
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-}
-@media (prefers-reduced-motion: reduce) {
-  *::-webkit-scrollbar-thumb,
-  *::-webkit-scrollbar-thumb:hover,
-  *::-webkit-scrollbar-thumb:active {
-    transition: none;
-    transform: none;
-  }
 }
 
 .dark {
@@ -191,6 +137,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-white-solid text-corbeau;
+    @apply bg-white-solid dark:bg-corbeau text-corbeau dark:text-white-solid;
   }
 }

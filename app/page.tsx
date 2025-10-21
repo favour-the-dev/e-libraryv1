@@ -1,3 +1,4 @@
+import HomePage from "./(pages)/index/page";
 export default function Home() {
-  return <></>;
+  return <HomePage />;
 }
