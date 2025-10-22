@@ -1,5 +1,7 @@
 "use client";
 import { ThemeProvider } from "next-themes";
+import AuthProvider from "./AuthProvider";
+
 export default function ProviderWrapper({
   children,
 }: {
@@ -7,7 +9,7 @@ export default function ProviderWrapper({
 }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      {children}
+      <AuthProvider>{children}</AuthProvider>
     </ThemeProvider>
   );
 }

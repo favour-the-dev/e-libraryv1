@@ -12,7 +12,9 @@
   --font-playfairDisplay: var(--font-playfair);
   --font-bbh-sans: "BBH Sans Hegarty", sans-serif;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 body {
   overflow-x: hidden;
 }
