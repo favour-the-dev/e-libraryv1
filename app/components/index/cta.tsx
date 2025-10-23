@@ -1,37 +1,29 @@
 "use client";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
-
 function CTABanner() {
-  const contentRef = useRef<HTMLDivElement | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useGSAP(() => {
-    gsap.from(contentRef.current, {
-      y: 60,
-      opacity: 0,
-      scale: 0.95,
-      duration: 0.8,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        toggleActions: "play none none none",
+  const contentVariants = {
+    hidden: { y: 60, opacity: 0, scale: 0.95 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.8,
       },
-    });
-  });
+    },
+  };
 
   return (
-    <section ref={sectionRef} className="py-16 my-10">
+    <section className="py-16 my-10">
       <div className="max-container">
-        <div
-          ref={contentRef}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={contentVariants}
           className="relative bg-gradient-to-r from-deepSkyBlue to-blue-600 rounded-2xl p-12 md:p-16 overflow-hidden"
         >
           {/* Decorative elements */}
@@ -61,7 +53,7 @@ function CTABanner() {
               </Link>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

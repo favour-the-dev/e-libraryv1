@@ -1,17 +1,8 @@
 "use client";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { BookOpen } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
-
 function Catalogue() {
-  const headerRef = useRef<HTMLElement | null>(null);
-  const bookRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const sectionRef = useRef<HTMLElement>(null);
-
   const books = [
     {
       title: "The Great Gatsby",
@@ -51,53 +42,50 @@ function Catalogue() {
     },
   ];
 
-  useGSAP(() => {
-    if (!sectionRef.current) return;
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        toggleActions: "play none none none",
-        // markers: true, // Uncomment to debug
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
       },
-    });
+    },
+  };
 
-    if (headerRef.current) {
-      tl.from(headerRef.current, {
-        y: 50,
-        opacity: 0,
+  const headerVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
         duration: 0.6,
-        ease: "power3.out",
-      });
-    }
+      },
+    },
+  };
 
-    const validBooks = bookRefs.current.filter((ref) => ref !== null);
-    if (validBooks.length > 0) {
-      tl.from(
-        validBooks,
-        {
-          y: 80,
-          opacity: 0,
-          scale: 0.9,
-          stagger: 0.15,
-          duration: 0.5,
-          ease: "power3.out",
-        },
-        "-=0.3"
-      );
-    }
-  });
+  const bookVariants = {
+    hidden: { y: 80, opacity: 0, scale: 0.9 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
 
   return (
     <section
       id="catalogue"
-      ref={sectionRef}
-      className="bg-gray-50 dark:bg-corbeau/30 py-16 my-10"
+      className="bg-gray-50 dark:bg-corbeau/30 py-16 my-10 min-h-[60dvh]"
     >
       <div className="max-container flex flex-col gap-8">
-        <header
-          ref={headerRef}
+        <motion.header
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={headerVariants}
           className="flex flex-col items-center justify-center gap-3"
         >
           <span className="w-fit bg-deepSkyBlue/20 text-deepSkyBlue p-2 rounded-xl font-playfairDisplay font-medium text-sm text-center">
@@ -110,15 +98,19 @@ function Catalogue() {
             Discover our curated selection of timeless classics and modern
             masterpieces
           </p>
-        </header>
+        </motion.header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={containerVariants}
+        >
           {books.map((book, index) => (
-            <div
+            <motion.div
               key={index}
-              //   ref={(el) => {
-              //     if (el) bookRefs.current[index] = el;
-              //   }}
+              variants={bookVariants}
               className="bg-white dark:bg-corbeau border border-gray-200 dark:border-gray-800 rounded-lg p-6 hover:shadow-lg hover:border-deepSkyBlue/50 transition-all duration-300 ease-in-out group"
             >
               <div className="flex flex-col gap-3">
@@ -142,9 +134,9 @@ function Catalogue() {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

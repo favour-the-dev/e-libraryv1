@@ -1,52 +1,46 @@
 "use client";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
-
 function Contact() {
-  const headerRef = useRef<HTMLElement | null>(null);
-  const formRef = useRef<HTMLDivElement | null>(null);
-  const infoRef = useRef<HTMLDivElement | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        toggleActions: "play none none none",
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
       },
-    });
+    },
+  };
 
-    tl.from(headerRef.current, {
-      y: 50,
-      opacity: 0,
-      duration: 0.6,
-      ease: "power3.out",
-    });
-
-    tl.from(
-      [infoRef.current, formRef.current],
-      {
-        y: 60,
-        opacity: 0,
-        stagger: 0.2,
+  const headerVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
         duration: 0.6,
-        ease: "power3.out",
       },
-      "-=0.3"
-    );
-  });
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 60, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+      },
+    },
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,12 +60,14 @@ function Contact() {
   return (
     <section
       id="contact"
-      ref={sectionRef}
       className="bg-gray-50 dark:bg-corbeau/30 py-16 my-10"
     >
       <div className="max-container flex flex-col gap-8">
-        <header
-          ref={headerRef}
+        <motion.header
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={headerVariants}
           className="flex flex-col items-center justify-center gap-3"
         >
           <span className="w-fit bg-deepSkyBlue/20 text-deepSkyBlue p-2 rounded-xl font-playfairDisplay font-medium text-sm text-center">
@@ -84,11 +80,17 @@ function Contact() {
             Have questions? We'd love to hear from you. Send us a message and
             we'll respond as soon as possible
           </p>
-        </header>
+        </motion.header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={containerVariants}
+        >
           {/* Contact Info */}
-          <div ref={infoRef} className="flex flex-col gap-6">
+          <motion.div variants={itemVariants} className="flex flex-col gap-6">
             <div className="bg-white dark:bg-corbeau border border-gray-200 dark:border-gray-800 rounded-lg p-6">
               <h3 className="font-semibold text-xl mb-4">
                 Contact Information
@@ -129,10 +131,10 @@ function Contact() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <div ref={formRef}>
+          <motion.div variants={itemVariants}>
             <form
               onSubmit={handleSubmit}
               className="bg-white dark:bg-corbeau border border-gray-200 dark:border-gray-800 rounded-lg p-6 flex flex-col gap-4"
@@ -199,8 +201,8 @@ function Contact() {
                 <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </form>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
