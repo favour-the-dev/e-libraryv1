@@ -1,4 +1,4 @@
-    export type Work = {
+    export type Book = {
         key: string;
         title: string;
         edition_count: number;
@@ -45,5 +45,5 @@
         subject_type: string;
         solr_query: string;
         work_count: number;
-        works: Work[];
+        works: Book[];
     }

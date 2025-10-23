@@ -80,13 +80,13 @@ function Hero() {
       <div className="max-container relative z-10 h-full flex flex-col md:flex-row items-center justify-between gap-5">
         {/* text content */}
         <motion.div
-          className="w-full md:w-1/2 flex flex-col gap-3 p-3"
+          className="w-full md:w-[65%] flex flex-col gap-3 p-3"
           initial="hidden"
           animate="visible"
           variants={containerVariants}
         >
           <h1
-            className="font-bbh-sans tracking-wider font-semibold text-4xl md:text-5xl text-white-solid 
+            className="font-bbh-sans tracking-wider font-semibold text-5xl md:text-6xl text-white-solid 
           flex items-center flex-wrap gap-2 md:gap-3"
           >
             {["Your", "Digital", "Library", "Simplified"].map((words, i) => (
