@@ -114,7 +114,7 @@ function Contact() {
                   <div>
                     <p className="font-medium">Phone</p>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">
-                      +1 (555) 123-4567
+                      +234 7010752695
                     </p>
                   </div>
                 </div>
@@ -125,7 +125,7 @@ function Contact() {
                   <div>
                     <p className="font-medium">Address</p>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">
-                      123 Library Street, Book City, BC 12345
+                      234 East West Road, Choba, Port-harcourt.
                     </p>
                   </div>
                 </div>

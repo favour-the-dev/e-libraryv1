@@ -48,20 +48,28 @@ function Navbar() {
               Catalogue
             </Link>
             <Link
-              href="#features"
+              href="/#testimonials"
               className={`${
-                pathName === "/features" && "text-deepSkyBlue"
+                pathName === "/#testimonials" && "text-deepSkyBlue"
               } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
             >
               Testimonials
             </Link>
             <Link
-              href="#contact"
+              href="/#contact"
               className={`${
-                pathName === "/contact" && "text-deepSkyBlue"
+                pathName === "/#contact" && "text-deepSkyBlue"
               } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
             >
               Contact
+            </Link>
+            <Link
+              href="/#faq"
+              className={`${
+                pathName === "/#faq" && "text-deepSkyBlue"
+              } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
+            >
+              FAQ's
             </Link>
           </div>
 
@@ -137,40 +145,49 @@ function Navbar() {
                     Home
                   </Link>
                   <Link
-                    href="/catalogue"
+                    href="/#how-it-works"
                     className={`${
-                      pathName === "/catalogue" && "text-deepSkyBlue"
+                      pathName === "/#how-it-works" && "text-deepSkyBlue"
+                    } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
+                    onClick={() => SetIsNavOpen(false)}
+                  >
+                    How It Works
+                  </Link>
+                  <Link
+                    href="/#catalogue"
+                    className={`${
+                      pathName === "/#catalogue" && "text-deepSkyBlue"
                     } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
                     onClick={() => SetIsNavOpen(false)}
                   >
                     Catalogue
                   </Link>
                   <Link
-                    href="#about"
+                    href="/#testimonials"
                     className={`${
-                      pathName === "/about" && "text-deepSkyBlue"
+                      pathName === "/#testimonials" && "text-deepSkyBlue"
                     } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
                     onClick={() => SetIsNavOpen(false)}
                   >
-                    About
+                    Testimonials
                   </Link>
                   <Link
-                    href="#features"
+                    href="/#contact"
                     className={`${
-                      pathName === "/features" && "text-deepSkyBlue"
-                    } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
-                    onClick={() => SetIsNavOpen(false)}
-                  >
-                    Features
-                  </Link>
-                  <Link
-                    href="#contact"
-                    className={`${
-                      pathName === "/contact" && "text-deepSkyBlue"
+                      pathName === "/#contact" && "text-deepSkyBlue"
                     } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
                     onClick={() => SetIsNavOpen(false)}
                   >
                     Contact
+                  </Link>
+                  <Link
+                    href="/#faq"
+                    className={`${
+                      pathName === "/#faq" && "text-deepSkyBlue"
+                    } hover:text-deepSkyBlue transition-colors duration-300 ease-in-out`}
+                    onClick={() => SetIsNavOpen(false)}
+                  >
+                    FAQ's
                   </Link>
                   <Link
                     href="/signin"
