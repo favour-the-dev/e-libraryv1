@@ -1,0 +1,55 @@
+BOOKWISE E-LIBRARY PLATFORM - PROJECT OBJECTIVES
+
+Student Name: [Your Name]
+Project Title: BookWise - Digital Library Management System
+Academic Year: 2024/2025
+Department: Computer Science
+
+
+PROJECT OBJECTIVES:
+
+1. PROVIDE ACCESSIBLE DIGITAL LIBRARY SERVICES
+   - Enable students and readers to access a digital library from anywhere at any time
+   - Eliminate geographical and time constraints of traditional physical libraries
+   - Allow users to browse and discover books across multiple genres and categories
+   - Provide a modern alternative to conventional library systems
+
+2. STREAMLINE BOOK BORROWING PROCESS
+   - Simplify the book borrowing experience through digital self-service
+   - Allow users to borrow books instantly without visiting a physical location
+   - Automatically track borrowed books and notify users of due dates
+   - Reduce administrative overhead associated with manual book lending
+
+3. MANAGE LIBRARY RESOURCES EFFICIENTLY
+   - Maintain an organized catalogue of available books and their status
+   - Track which books are borrowed, available, or overdue
+   - Ensure fair distribution of resources by limiting simultaneous borrows
+   - Provide administrators with tools to manage the library inventory
+
+4. ENHANCE USER EXPERIENCE AND ENGAGEMENT
+   - Offer an intuitive and visually appealing interface for all user types
+   - Support different viewing preferences through light and dark themes
+   - Make the platform accessible on various devices (desktop, tablet, mobile)
+   - Create an engaging experience that encourages regular platform usage
+
+5. ENABLE EFFECTIVE LIBRARY ADMINISTRATION
+   - Provide library administrators with centralized control over the system
+   - Allow monitoring of borrowing patterns and user activities
+   - Support data-driven decisions through usage analytics and insights
+   - Facilitate quick resolution of issues such as overdue books and user inquiries
+
+
+TECHNOLOGIES USED:
+- Frontend: Next.js 14, React, TypeScript, Tailwind CSS, Framer Motion
+- Backend: Next.js API Routes, NextAuth.js
+- Database: MongoDB with Mongoose ODM
+- Authentication: NextAuth.js with credentials provider
+- Styling: Tailwind CSS with custom theme configuration
+
+
+EXPECTED OUTCOMES:
+- A fully functional web-based library management system
+- Secure user authentication and authorization
+- Efficient book borrowing and tracking mechanism
+- Intuitive and responsive user interface
+- Scalable architecture suitable for future enhancements
