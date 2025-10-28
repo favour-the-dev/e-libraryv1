@@ -7,16 +7,18 @@ export const metadata: Metadata = {
   description: "Administrative panel for managing the Bookwise platform.",
 };
 
-export default function AdminLayout({children}: { children: React.ReactNode }) {
-    return (
-        <section className="flex w-screen h-screen fixed inset-0 z-[500] overflow-hidden bg-white-solid text-corbeau dark:bg-corbeau dark:text-white-solid">
-            <AdminSideBar />
-            <div className="flex-1 flex flex-col">
-                <AdminNavbar />
-                <div className="flex-1 overflow-y-auto">
-                    {children}
-                </div>
-            </div>
-        </section>
-    )
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="flex w-screen h-screen fixed inset-0 z-[500] overflow-hidden bg-white-solid text-corbeau dark:bg-corbeau dark:text-white-solid">
+      <AdminSideBar />
+      <div className="w-full flex-1 flex flex-col">
+        <AdminNavbar />
+        <div className="flex-1 overflow-y-auto">{children}</div>
+      </div>
+    </section>
+  );
 }

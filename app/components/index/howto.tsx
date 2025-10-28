@@ -12,6 +12,10 @@ function HowItWorks() {
       desc: "Once you find a book you like, borrow it instantly with a single click.",
     },
     {
+      feature: "Earn Reading Points",
+      desc: "Read and complete books to earn points and see how you compare with orther readers, to claim first prize and win gifts.",
+    },
+    {
       feature: "Track & Return",
       desc: "Manage your borrowed books, get reminders for due dates, and return them hassle free",
     },

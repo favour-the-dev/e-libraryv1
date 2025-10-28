@@ -1,35 +1,35 @@
 "use client";
 import Link from "next/link";
-import { ChartColumnBig, BookOpenText, ScrollText, Users } from "lucide-react";
+import { Library, BookMarked, History, Trophy } from "lucide-react";
 import LogOutBtn from "../ui-helpers/logout";
 import { useSession } from "next-auth/react";
 import Logo from "../ui-helpers/Logo";
 import { usePathname } from "next/navigation";
 
-function AdminSideBar() {
+function ReaderSidebar() {
   const { data: session } = useSession();
   const pathName = usePathname();
 
   const links = [
     {
-      path: "/admin/dashboard",
-      name: "Dashboard",
-      icon: <ChartColumnBig />,
+      path: "/reader/all-books",
+      name: "All Books",
+      icon: <Library />,
     },
     {
-      path: "/admin/books-inventory",
-      name: "Books Inventory",
-      icon: <BookOpenText />,
+      path: "/reader/borrowed-books",
+      name: "My Books",
+      icon: <BookMarked />,
     },
     {
-      path: "/admin/borrow-requests",
-      name: "Borrow Requests",
-      icon: <ScrollText />,
+      path: "/reader/return-history",
+      name: "History",
+      icon: <History />,
     },
     {
-      path: "/admin/users",
-      name: "Users",
-      icon: <Users />,
+      path: "/reader/leaderboard",
+      name: "Leaderboard",
+      icon: <Trophy />,
     },
   ];
 
@@ -39,7 +39,7 @@ function AdminSideBar() {
          border-gray-200 dark:border-gray-700 p-5 space-y-6"
     >
       <header className="flex flex-col gap-8">
-        <Logo page="admin" />
+        <Logo page="reader" />
         <nav className="flex flex-col gap-3">
           {links.map((link) => (
             <Link
@@ -70,4 +70,4 @@ function AdminSideBar() {
   );
 }
 
-export default AdminSideBar;
+export default ReaderSidebar;

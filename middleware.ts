@@ -3,26 +3,30 @@ import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
-    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
-    const {pathname} = request.nextUrl;
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+  const { pathname } = request.nextUrl;
 
-    const isAuthPage = pathname.startsWith('/register') 
-    || pathname.startsWith('/signin') 
-    || pathname === "/";
+  const isAuthPage =
+    pathname.startsWith("/register") ||
+    pathname.startsWith("/signin") ||
+    pathname === "/";
 
-    if (!token && !isAuthPage) {
-        return NextResponse.redirect(new URL('/', request.url));
+  if (!token && !isAuthPage) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  if (token && isAuthPage) {
+    if (token.role === "admin") {
+      return NextResponse.redirect(new URL("/admin/dashboard", request.url));
+    } else if (token.role === "user") {
+      return NextResponse.redirect(new URL("/reader/all-books", request.url));
     }
+  }
 
-    if(token && isAuthPage) {
-        if(token.role === 'admin') {
-            return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-        }else if(token.role === 'user') {
-            return NextResponse.redirect(new URL('/reader/dashboard', request.url));
-        }
-    }
-
-    return NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {

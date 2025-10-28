@@ -2,17 +2,17 @@
 import { useSession } from "next-auth/react";
 import ThemeSwitchBtn from "../ui-helpers/ThemeSwitchBtn";
 import {
-  Bell,
   Menu,
   Search,
   X,
-  ChartColumnBig,
-  BookOpenText,
-  ScrollText,
-  Users,
+  Library,
+  BookMarked,
+  History,
+  Trophy,
+  Bell,
   AlertCircle,
   Clock,
-  CheckCircle2,
+  Calendar,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -23,14 +23,16 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface Notification {
   id: string;
-  type: "borrow" | "overdue" | "due_soon";
+  type: "overdue" | "due_soon" | "due_today";
   message: string;
   time: string;
   read: boolean;
   priority: "high" | "medium" | "low";
+  bookTitle: string;
+  dueDate: string;
 }
 
-function AdminNavbar() {
+function ReaderNavbar() {
   const { data: session } = useSession();
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -42,15 +44,15 @@ function AdminNavbar() {
 
   useEffect(() => {
     fetchNotifications();
-    // Poll for new notifications every 30 seconds
-    const interval = setInterval(fetchNotifications, 30000);
+    // Poll for new notifications every 60 seconds
+    const interval = setInterval(fetchNotifications, 60000);
     return () => clearInterval(interval);
   }, []);
 
   const fetchNotifications = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/notifications");
+      const response = await fetch("/api/reader/notifications");
       const data = await response.json();
 
       if (data.success) {
@@ -68,10 +70,10 @@ function AdminNavbar() {
     switch (type) {
       case "overdue":
         return <AlertCircle className="w-5 h-5 text-red-500" />;
+      case "due_today":
+        return <Clock className="w-5 h-5 text-orange-500" />;
       case "due_soon":
-        return <Clock className="w-5 h-5 text-yellow-500" />;
-      case "borrow":
-        return <CheckCircle2 className="w-5 h-5 text-blue-500" />;
+        return <Calendar className="w-5 h-5 text-yellow-500" />;
       default:
         return <Bell className="w-5 h-5" />;
     }
@@ -81,10 +83,10 @@ function AdminNavbar() {
     switch (type) {
       case "overdue":
         return "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800";
+      case "due_today":
+        return "bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800";
       case "due_soon":
         return "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800";
-      case "borrow":
-        return "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800";
       default:
         return "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700";
     }
@@ -92,24 +94,24 @@ function AdminNavbar() {
 
   const links = [
     {
-      path: "/admin/dashboard",
-      name: "Dashboard",
-      icon: <ChartColumnBig className="w-5 h-5" />,
+      path: "/reader/all-books",
+      name: "All Books",
+      icon: <Library className="w-5 h-5" />,
     },
     {
-      path: "/admin/books-inventory",
-      name: "Books Inventory",
-      icon: <BookOpenText className="w-5 h-5" />,
+      path: "/reader/borrowed-books",
+      name: "My Books",
+      icon: <BookMarked className="w-5 h-5" />,
     },
     {
-      path: "/admin/borrow-requests",
-      name: "Borrow Requests",
-      icon: <ScrollText className="w-5 h-5" />,
+      path: "/reader/return-history",
+      name: "History",
+      icon: <History className="w-5 h-5" />,
     },
     {
-      path: "/admin/users",
-      name: "Users",
-      icon: <Users className="w-5 h-5" />,
+      path: "/reader/leaderboard",
+      name: "Leaderboard",
+      icon: <Trophy className="w-5 h-5" />,
     },
   ];
 
@@ -130,7 +132,7 @@ function AdminNavbar() {
               <Search className="w-4 h-4 text-gray-500" />
               <input
                 type="text"
-                placeholder="Search books, users..."
+                placeholder="Search books..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-transparent outline-none text-sm w-full placeholder:text-gray-500"
@@ -146,7 +148,7 @@ function AdminNavbar() {
             >
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-semibold">
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-semibold animate-pulse">
                   {unreadCount > 9 ? "9+" : unreadCount}
                 </span>
               )}
@@ -157,12 +159,12 @@ function AdminNavbar() {
             <div className="hidden md:flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
               <div className="text-right">
                 <p className="text-sm font-semibold">
-                  {session?.user?.name || "Admin"}
+                  {session?.user?.name || "Reader"}
                 </p>
-                <p className="text-xs text-gray-500">Administrator</p>
+                <p className="text-xs text-gray-500">Member</p>
               </div>
               <div className="w-10 h-10 rounded-full bg-deepSkyBlue/20 text-deepSkyBlue font-bold flex items-center justify-center">
-                {session?.user?.name?.charAt(0).toUpperCase() || "A"}
+                {session?.user?.name?.charAt(0).toUpperCase() || "R"}
               </div>
             </div>
           </div>
@@ -193,7 +195,7 @@ function AdminNavbar() {
             >
               {/* Header */}
               <div className="flex items-center justify-between p-5 border-b border-gray-200 dark:border-gray-700">
-                <Logo page="admin" />
+                <Logo page="reader" />
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
@@ -225,11 +227,11 @@ function AdminNavbar() {
               <div className="p-5 border-t border-gray-200 dark:border-gray-700 space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-deepSkyBlue/20 text-deepSkyBlue font-bold flex items-center justify-center flex-shrink-0">
-                    {session?.user?.name?.charAt(0).toUpperCase() || "A"}
+                    {session?.user?.name?.charAt(0).toUpperCase() || "R"}
                   </div>
                   <div className="flex-1 min-w-0">
                     <h2 className="font-semibold text-sm truncate">
-                      {session?.user?.name || "Admin"}
+                      {session?.user?.name || "Reader"}
                     </h2>
                     <p className="text-xs text-gray-600 dark:text-gray-400 truncate">
                       {session?.user?.email}
@@ -268,10 +270,10 @@ function AdminNavbar() {
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="text-lg font-bold">Notifications</h3>
+                  <h3 className="text-lg font-bold">Due Date Reminders</h3>
                   <p className="text-sm text-gray-500">
-                    {unreadCount} unread notification
-                    {unreadCount !== 1 ? "s" : ""}
+                    {unreadCount} book{unreadCount !== 1 ? "s" : ""} need
+                    {unreadCount !== 1 ? "" : "s"} attention
                   </p>
                 </div>
                 <button
@@ -295,7 +297,7 @@ function AdminNavbar() {
                       No notifications
                     </p>
                     <p className="text-sm text-gray-400 dark:text-gray-500">
-                      You're all caught up!
+                      All your books are on track!
                     </p>
                   </div>
                 ) : (
@@ -316,9 +318,26 @@ function AdminNavbar() {
                           <p className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                             {notification.message}
                           </p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {notification.time}
-                          </p>
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-gray-500 dark:text-gray-400">
+                              {notification.time}
+                            </span>
+                            <span
+                              className={`px-2 py-1 rounded-full font-semibold ${
+                                notification.type === "overdue"
+                                  ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400"
+                                  : notification.type === "due_today"
+                                  ? "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400"
+                                  : "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400"
+                              }`}
+                            >
+                              {notification.type === "overdue"
+                                ? "Overdue"
+                                : notification.type === "due_today"
+                                ? "Due Today"
+                                : "Upcoming"}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </motion.div>
@@ -328,7 +347,14 @@ function AdminNavbar() {
 
               {/* Footer */}
               {notifications.length > 0 && (
-                <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="p-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+                  <Link
+                    href="/reader/borrowed-books"
+                    onClick={() => setIsNotificationsOpen(false)}
+                    className="block w-full text-center px-4 py-2 bg-deepSkyBlue text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+                  >
+                    View My Books
+                  </Link>
                   <button
                     onClick={fetchNotifications}
                     className="w-full text-center text-sm text-deepSkyBlue hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
@@ -345,4 +371,4 @@ function AdminNavbar() {
   );
 }
 
-export default AdminNavbar;
+export default ReaderNavbar;
